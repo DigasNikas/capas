@@ -1,0 +1,10 @@
+README.rst
+setup.py
+capas/__init__.py
+capas/getjornals.py
+capas/models.py
+capas.egg-info/PKG-INFO
+capas.egg-info/SOURCES.txt
+capas.egg-info/dependency_links.txt
+capas.egg-info/requires.txt
+capas.egg-info/top_level.txt
