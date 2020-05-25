@@ -8,6 +8,7 @@ authors = ["dlimanic <dlimanic@cern.ch>"]
 python = "^3.8"
 alembic = "^1.4.2"
 psycopg2-binary = "^2.8.5"
+python-dotenv = "^0.13.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
