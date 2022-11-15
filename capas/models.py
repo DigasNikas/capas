@@ -1,15 +1,17 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, String, DateTime
+from sqlalchemy.sql import func
 
 Base = declarative_base()
 
 class JornalURL(Base):
     __tablename__ = "jornal_url"
 
-    id = Column('id', Integer, primary_key=True, index=True)
-    jornal_name = Column('jornal_name', String, nullable=False)
+    name = Column('name', String, nullable=False)
     description = Column('description', String, nullable=False)
-    image_url = Column('image_url', String, nullable=False)
+    url = Column('url', String, nullable=False, primary_key=True)
     timestamp = Column('date_tsmp', DateTime, nullable=False)
     date = Column('date_str', String, nullable=False)
-    created = Column('created', DateTime, nullable=False)
+    time_created = Column(DateTime(timezone=True), server_default=func.now())
+    time_updated = Column(DateTime(timezone=True), onupdate=func.now())
+    path = Column('path', String, nullable=False)
