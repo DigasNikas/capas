@@ -1,8 +1,8 @@
 """create jornalurl table
 
-Revision ID: cdc208f28317
+Revision ID: 5657534046ee
 Revises: 
-Create Date: 2022-11-14 17:59:20.611096
+Create Date: 2022-11-20 21:19:00.358799
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'cdc208f28317'
+revision = '5657534046ee'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -27,6 +27,8 @@ def upgrade() -> None:
     sa.Column('time_created', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=True),
     sa.Column('time_updated', sa.DateTime(timezone=True), nullable=True),
     sa.Column('path', sa.String(), nullable=False),
+    sa.Column('colors', sa.String(), nullable=False),
+    sa.Column('colors_simple', sa.String(), nullable=False),
     sa.PrimaryKeyConstraint('url')
     )
     # ### end Alembic commands ###

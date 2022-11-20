@@ -15,3 +15,5 @@ class JornalURL(Base):
     time_created = Column(DateTime(timezone=True), server_default=func.now())
     time_updated = Column(DateTime(timezone=True), onupdate=func.now())
     path = Column('path', String, nullable=False)
+    colors = Column('colors', String, nullable=False)
+    colors_simple = Column('colors_simple', String, nullable=False)

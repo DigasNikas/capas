@@ -5,15 +5,18 @@ import sys
 
 from dateutil import parser
 from bs4 import BeautifulSoup
-from sqlalchemy import insert, create_engine
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from capas.models import JornalURL
+from capas.colors import RGBTranslate
 
 class GetJornals:
 
     engine = create_engine('postgresql://root:root@localhost/root')
     Session = sessionmaker(bind=engine)
     session = Session()
+    rgb_translator = RGBTranslate()
+
 
     jornal_dict = {
         "bola":"4137",
@@ -21,8 +24,16 @@ class GetJornals:
         "record":"4139"
     }
 
-    def insert_jornal(self, name, desc, url, date_tmsp, date_str, path):
-        jornal = JornalURL(name=name, description=desc, url=url, timestamp=date_tmsp, date=date_str, path=path)
+    def insert_jornal(self, name, desc, url, date_tmsp, date_str, path,colors, colors_simple):
+        jornal = JornalURL(
+            name=name, 
+            description=desc, 
+            url=url, 
+            timestamp=date_tmsp, 
+            date=date_str, 
+            path=path,
+            colors=colors,
+            colors_simple=colors_simple)
         self.session.merge(jornal)
 
     def __get_html_http(self, url):
@@ -47,17 +58,18 @@ class GetJornals:
         else:
             description = ""
         picture_url = picture_tag["data-original-src"]
-        picture_title = picture_tag["title"].replace(" ","")
-        
+
         path = "images/"+jornal+"/"
         os.makedirs(os.path.dirname(path), exist_ok=True)
         image_path = path+date.lower()
-        urllib.request.urlretrieve(picture_url,image_path)
+        tmp,_ = urllib.request.urlretrieve(picture_url,image_path)
+        colors,colors_simple = self.rgb_translator.get_colors(tmp)
 
-        self.insert_jornal(picture_title,description,picture_url,datetime,date,image_path)
+        self.insert_jornal(jornal,description,picture_url,datetime,date,image_path,colors,colors_simple)
         
     def get_jornals(self, date):
         for jornal in self.jornal_dict.keys():
+            print(f'Running {jornal} for date: {date}')
             self.get_jornal(jornal, date)
 
     def get_jornals_range(self, start, end):
