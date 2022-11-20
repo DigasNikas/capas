@@ -17,7 +17,6 @@ class GetJornals:
     session = Session()
     rgb_translator = RGBTranslate()
 
-
     jornal_dict = {
         "bola":"4137",
         "ojogo":"4138",
