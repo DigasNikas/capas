@@ -12,8 +12,6 @@ RUN pip install poetry
 COPY pyproject.toml poetry.lock /code/
 RUN poetry config virtualenvs.create false
 RUN poetry install
-RUN alembic upgrade head
-
 COPY . /code/
 
 EXPOSE 8000
