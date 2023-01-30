@@ -1,5 +1,6 @@
-.env
+/.env
 /.venv
 /.vscode
 images/
 *cache*
+*logs*
